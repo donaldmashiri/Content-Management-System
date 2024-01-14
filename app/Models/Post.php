@@ -12,8 +12,15 @@ class Post extends Model
     use SoftDeletes, HasFactory;
 
     protected $fillable = [
-        'title', 'description', 'contents', 'image', 'published_at', 'category_id'
+        'title', 'description', 'contents', 'image', 'published_at', 'category_id', 'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
 
     public function deleteImage()
     {

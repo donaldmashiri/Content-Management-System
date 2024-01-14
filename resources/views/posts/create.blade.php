@@ -1,19 +1,19 @@
 <x-app-layout>
- 
+
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ isset($post) ? 'Edit Post': 'Create Post'}}
             <a href="{{route('posts.index')}}" class="float-right text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Back</a>
         </h2>
-       
+
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                   
+
                     <form method="POST" action="{{ isset($post) ? route('posts.update', $post->id) : route('posts.store') }}" enctype="multipart/form-data">
                         @if(isset($post))
                             @method('PUT')
@@ -34,7 +34,7 @@
 
                         <div class="p-2">
                             <x-input-label for="contents" :value="__('Content')" />
-                            <input id="contents" value="{{ isset($post) ? $post->title : ''}}" type="hidden" name="contents">
+                            <input id="contents" value="{{ isset($post) ? $post->contents : ''}}" type="hidden" name="contents">
                             <trix-editor input="contents"></trix-editor>
                             <x-input-error :messages="$errors->get('contents')" class="mt-2" />
                         </div>
@@ -45,7 +45,7 @@
                             <x-input-error :messages="$errors->get('published_at')" class="mt-2" />
                         </div>
 
-                     
+
                        <div class="p-2">
                          @if(isset($post))
                             <div>
@@ -56,7 +56,7 @@
                             <input name="image" class="block w-full text-lg  rounded cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:border-gray-600 dark:placeholder-gray-400" id="image" type="file">
                             <x-input-error :messages="$errors->get('image')" class="mt-2" />
                         </div>
-                      
+
 
                         <div class="p-2">
                             <x-input-label for="category" :value="__('Category')" />
@@ -70,7 +70,7 @@
                                       @endif
                                     >
                                     {{$category->name}}</option>
-                               @endforeach 
+                               @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('category')" class="mt-2" />
                         </div>
@@ -85,18 +85,18 @@
                                          @if($post->hasTag($tag->id))
                                           selected
                                          @endif
-                                        @endif 
+                                        @endif
                                         >
                                     {{$tag->name}}</option>
-                                @endforeach 
+                                @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('tags')" class="mt-2" />
                          </div>
                          @endif
-                     
+
 
                         <div class="flex items-center justify-end mt-4">
-                           
+
                             <x-primary-button class="ml-4">
                                 {{ isset($post) ? 'Update Post': 'Add Post' }}
                             </x-primary-button>
@@ -105,7 +105,7 @@
                 </div>
             </div>
 
-        
+
         </div>
     </div>
             </div>
@@ -118,25 +118,25 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    
+
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <!-- Include jQuery library -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
+
     <!-- Include Select2 script after jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    
+
     <!-- Your HTML code -->
-   
-    
+
+
     <script>
        $(document).ready(function() {
         $('.js-example-basic-multiple').select2();
     });
     </script>
 
-     
+
 
     <script>
 

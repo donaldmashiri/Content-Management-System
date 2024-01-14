@@ -18,9 +18,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+//Route::get('/', function () {
+//    return view('auth.login');
+//});
+
+Route::resource('/', \App\Http\Controllers\WelcomeController::class);
+Route::resource('blog', \App\Http\Controllers\Blog\PostController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -37,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::put('restore-posts', [PostController::class, 'restore'])->name('restore-posts');
 
     Route::resource('tags', TagController::class);
+
 
 
 });

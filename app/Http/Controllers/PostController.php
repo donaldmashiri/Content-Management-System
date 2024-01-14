@@ -46,6 +46,7 @@ class PostController extends Controller
             'description' => $request->description,
             'contents' => $request->contents,
             'image' => $image,
+            'user_id' => auth()->user()->id,
             'published_at' => $request->published_at,
             'category_id' => $request->category_id,
         ]);
@@ -83,8 +84,8 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        $data = $request->only(['title', 'description', 'published_at', 'content', 'category_id']);
-        // check if new image 
+        $data = $request->only(['title', 'description', 'published_at', 'contents', 'category_id']);
+        // check if new image
         if($request->hasFile('image')){
             // upload it
             $image = $request->image->store('posts');
@@ -95,7 +96,7 @@ class PostController extends Controller
             $data['image'] = $image;
 
         }
-        
+
         if($request->tags){
             $post->tags()->sync($request->tags);
         }
@@ -112,7 +113,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
-       
+
         if($post->trashed()){
             // Storage::delete($post->image);
             $post->deleteImage();
@@ -129,14 +130,14 @@ class PostController extends Controller
     public function trashed()
     {
         $trashed = Post::onlyTrashed()->get();
-    
+
         return view('posts.index')->with('posts', $trashed);
     }
 
     public function restore($id)
     {
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
-        
+
         $post->restore();
 
         session()->flash('success', 'Post restored successfully');
